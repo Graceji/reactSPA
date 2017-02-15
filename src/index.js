@@ -1,8 +1,17 @@
 import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import 
+import { Router, browserHistory } from 'react-router';
 import App from './components/Main';
+
+import Welcome from './Welcome/Welcome';
+import Profile from './profile/Profile';
+import Campaign from './Campaign/Campaign';
+import Counter from './counter/Counter';
+import Charts from './Charts/Charts';
+import Last from './last/Last';
+import NotFoundPage from './nofind/NotFindPage';
+import Login from './login/Login';
 
 const routes = {
   path: '/',
@@ -13,30 +22,43 @@ const routes = {
   childRoutes: [
     {
       path: 'profile',
-      component: Profile,
+      component: Profile
     },
     {
       path: 'campaign',
-      component: Campaign,
+      component: Campaign
     },
     {
       path: 'counter',
-      component: Counter,
+      component: Counter
     },
     {
       path: 'charts',
-      component: Charts,
+      component: Charts
     },
     {
       path: 'last',
-      component: Last,
+      component: Last
     },
     {
       path: '/404',
-      component: NotFoundPage,
+      component: NotFoundPage
+    },
+    {
+      path: '*',
+      onEnter: ({ params }, replace) => replace('/404')
     }
   ]
 };
 
+const login = {
+  path: '/login',
+  component: Login
+};
+
+
 // Render the main component into the dom
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <Router routes={[login, routes]} history={browserHistory} />
+  , document.getElementById('app')
+);
